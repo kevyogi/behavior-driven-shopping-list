@@ -17,4 +17,12 @@ class ShoppingList {
     let itemIndex = this.items.indexOf(item);
     this.items.splice(itemIndex, 1);
   }
+
+  render() {
+    let theList = "";
+    this.items.forEach(function(items){
+      theList += items.render();
+    })
+    return `<ul>${theList}</ul>`;
+  }
 }

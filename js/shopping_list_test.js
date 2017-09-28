@@ -73,7 +73,11 @@ describe('ShoppingListItem', function(){
 //ShoppingList tests
 
 let testSLI = new ShoppingListItem("apple", "red");
+// testSLI.check();
+// testSLI.render();
 let testSLI2 = new ShoppingListItem("orange", "orange");
+// testSLI2.uncheck();
+// testSLI2.render();
 let nonSLI = {name: "pear", description: "green"};
 
 describe('ShoppingList', function(){
@@ -122,6 +126,20 @@ describe('ShoppingList', function(){
       let sl = new ShoppingList();
       sl.addItem(testSLI);
       expect(sl.removeItem.bind(sl, nonSLI)).to.throw(TypeError);
+    });
+  });
+  describe('.render', function(){
+    it('should have a render method', function(){
+      let sl = new ShoppingList();
+      expect(sl.render).to.be.a('function');
+    });
+    it('should concatenate result of calling render on each item in object\'s items array and return html formatted string', function(){
+      let sl = new ShoppingList();
+      sl.addItem(testSLI);
+      testSLI.check();
+      sl.addItem(testSLI2);
+      testSLI2.uncheck();
+      expect(sl.render()).to.equal(`<ul><li class="completed_true"><span>apple</span><span>red</span></li><li class="completed_false"><span>orange</span><span>orange</span></li></ul>`);
     });
   });
 })
