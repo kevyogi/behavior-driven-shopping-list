@@ -73,6 +73,7 @@ describe('ShoppingListItem', function(){
 //ShoppingList tests
 
 let testSLI = new ShoppingListItem("apple", "red");
+let testSLI2 = new ShoppingListItem("orange", "orange");
 let nonSLI = {name: "pear", description: "green"};
 
 describe('ShoppingList', function(){
@@ -105,7 +106,22 @@ describe('ShoppingList', function(){
       expect(sl.addItem.bind(sl, nonSLI)).to.throw(TypeError);
     });
   });
-  // describe('.removeItem', function(){
-  //   it('should have a removeItem method')
-  // })
+  describe('.removeItem', function(){
+    it('should have a removeItem method', function(){
+      let sl = new ShoppingList();
+      expect(sl.removeItem).to.be.a('function');
+    });
+    it('should remove ShoppingListItem from items array', function(){
+      let sl = new ShoppingList();
+      sl.addItem(testSLI);
+      sl.addItem(testSLI2);
+      sl.removeItem(testSLI);
+      expect(sl.items).to.deep.equal([{name: "orange", description: "orange"}]);
+    });
+    it('should throw error if non-ShoppingListItem is passed in', function(){
+      let sl = new ShoppingList();
+      sl.addItem(testSLI);
+      expect(sl.removeItem.bind(sl, nonSLI)).to.throw(TypeError);
+    });
+  });
 })
