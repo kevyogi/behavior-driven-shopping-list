@@ -77,18 +77,22 @@ describe('ShoppingList', function(){
     expect(sl).to.have.property('items');
   });
   it('should have a constructor that initializes items as empty array', function(){
-    let sl = new ShoppingList();
-
+    let sl = new ShoppingList(items);
+    expect(sl.items).to.be.an('array');
   })
   describe('.addItem', function(){
     it('should have an addItem method', function(){
       let sl = new ShoppingList();
       expect(sl.addItem).to.be.a('function');
     });
-    // it('should add ShoppingListItem object to items array'){
-    //   let sl = new ShoppingList();
-    //   sl.addItem({});
-    //   expect
-    // }
+    it('should add ShoppingListItem object to items array', function(){
+      let sl = new ShoppingList(items);
+      sl.addItem({name: apple, description: red});
+      expect(sl.items).to.equal([{name: apple, description: red}]);
+    });
+    it('should throw error if non-ShoppingListItem not passed in', function(){
+      let sl = new ShoppingListItem(items);
+      expect(sl.addItem(9).bind(sl)).to.throw(TypeError);
+    });
   })
 })
