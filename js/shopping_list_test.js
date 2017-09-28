@@ -1,6 +1,8 @@
 const expect = chai.expect;
 const should = chai.should();
 
+//ShoppingListItem tests
+
 describe('ShoppingListItem', function(){
   let sli;
   beforeEach(function(){
@@ -68,6 +70,11 @@ describe('ShoppingListItem', function(){
   });
 });
 
+//ShoppingList tests
+
+let testSLI = new ShoppingListItem("apple", "red");
+let nonSLI = {name: "pear", description: "green"};
+
 describe('ShoppingList', function(){
   it('should be a function', function(){
     expect(ShoppingList).to.be.a('function');
@@ -76,23 +83,29 @@ describe('ShoppingList', function(){
     let sl = new ShoppingList();
     expect(sl).to.have.property('items');
   });
-  it('should have a constructor that initializes items as empty array', function(){
-    let sl = new ShoppingList(items);
-    expect(sl.items).to.be.an('array');
-  })
+  describe('constructor', function(){
+    it('should have a constructor that initializes items as empty array', function(){
+      let sl = new ShoppingList();
+      expect(sl.items).to.be.an('array');
+      expect(sl.items).to.deep.equal([]);
+    });
+  });
   describe('.addItem', function(){
     it('should have an addItem method', function(){
       let sl = new ShoppingList();
       expect(sl.addItem).to.be.a('function');
     });
     it('should add ShoppingListItem object to items array', function(){
-      let sl = new ShoppingList(items);
-      sl.addItem({name: apple, description: red});
-      expect(sl.items).to.equal([{name: apple, description: red}]);
+      let sl = new ShoppingList();
+      sl.addItem(testSLI);
+      expect(sl.items).to.deep.equal([{name: "apple", description: "red"}]);
     });
-    it('should throw error if non-ShoppingListItem not passed in', function(){
-      let sl = new ShoppingListItem(items);
-      expect(sl.addItem(9).bind(sl)).to.throw(TypeError);
+    it('should throw error if non-ShoppingListItem is passed in', function(){
+      let sl = new ShoppingList();
+      expect(sl.addItem.bind(sl, nonSLI)).to.throw(TypeError);
     });
-  })
+  });
+  // describe('.removeItem', function(){
+  //   it('should have a removeItem method')
+  // })
 })
