@@ -67,7 +67,7 @@ describe('ShoppingListItem', function(){
     it('should construct and return an html formatted string', function(){
       let sli = new ShoppingListItem("foo", "bar");
       sli.check();
-      expect(sli.render()).to.equal(`<li class="completed_true"><span>foo</span><span>bar</span></li>`);
+      expect(sli.render()).to.equal(`<li class="completed_true"><span>foo</span> <span>bar</span></li>`);
     });
   });
 });
