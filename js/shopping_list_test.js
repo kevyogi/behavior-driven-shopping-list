@@ -21,19 +21,21 @@ describe('ShoppingListItem', function(){
   });
   it('should have an is_done property', function(){
     let sli = new ShoppingListItem();
-    expect(sli.is_done).to.be.undefined;
+    expect(sli).to.have.property('is_done');
   });
-  it('should have a constructor method', function(){
-    let sli = new ShoppingListItem();
-    expect(sli.constructor).to.be.a('function');
-  });
-  it('constructor should have name argument and set name property', function(){
-    let sli = new ShoppingListItem("foo", "bar");
-    expect(sli.name).to.equal("foo");
-  });
-  it('constructor should have description argument and set description property', function(){
-    let sli = new ShoppingListItem("foo", "bar");
-    expect(sli.description).to.equal("bar");
+  describe('constructor', function(){
+    it('should have a constructor method', function(){
+      let sli = new ShoppingListItem();
+      expect(sli.constructor).to.be.a('function');
+    });
+    it('constructor should have name argument and set name property', function(){
+      let sli = new ShoppingListItem("foo", "bar");
+      expect(sli.name).to.equal("foo");
+    });
+    it('constructor should have description argument and set description property', function(){
+      let sli = new ShoppingListItem("foo", "bar");
+      expect(sli.description).to.equal("bar");
+    });
   });
   describe('.check', function(){
     it('should have a check method', function(){
@@ -103,7 +105,7 @@ describe('ShoppingList', function(){
     it('should add ShoppingListItem object to items array', function(){
       let sl = new ShoppingList();
       sl.addItem(testSLI);
-      expect(sl.items).to.deep.equal([{name: "apple", description: "red"}]);
+      expect(sl.items).to.deep.equal([{name: "apple", description: "red", is_done: false}]);
     });
     it('should throw error if non-ShoppingListItem is passed in', function(){
       let sl = new ShoppingList();
@@ -120,8 +122,20 @@ describe('ShoppingList', function(){
       sl.addItem(testSLI);
       sl.addItem(testSLI2);
       sl.removeItem(testSLI);
-      expect(sl.items).to.deep.equal([{name: "orange", description: "orange"}]);
+      expect(sl.items).to.deep.equal([{name: "orange", description: "orange", is_done: false}]);
     });
+    it('should remove last item if no item is specified', function(){
+      let sl = new ShoppingList();
+      sl.addItem(testSLI);
+      sl.addItem(testSLI2);
+      sl.removeItem();
+      expect(sl.items).to.deep.equal([{name: "apple", description: "red", is_done: false}]);
+    });
+    it('should throw error if item is not currently in ShoppingList', function(){
+      let sl = new ShoppingList();
+      sl.addItem(testSLI2);
+      expect(sl.removeItem.bind(sl, testSLI)).to.throw(Error);
+    })
     it('should throw error if non-ShoppingListItem is passed in', function(){
       let sl = new ShoppingList();
       sl.addItem(testSLI);

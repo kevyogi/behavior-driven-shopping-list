@@ -4,18 +4,25 @@ class ShoppingList {
   }
 
   addItem(item) {
-    if(!(item instanceof ShoppingListItem)){
+    if(item instanceof ShoppingListItem){
+      this.items.push(item);
+    }else{
       throw new TypeError;
     }
-    this.items.push(item);
   }
 
   removeItem(item) {
-    if(!(item instanceof ShoppingListItem)){
-      throw new TypeError;
-    }
     let itemIndex = this.items.indexOf(item);
-    this.items.splice(itemIndex, 1);
+    let lastItem = this.items.length - 1
+    if(!(item instanceof ShoppingListItem) && item){
+      throw new TypeError;
+    }else if((this.items.indexOf(item) === -1) && item){
+      throw new Error;
+    }else if(!item){
+      this.items.splice(lastItem, 1);
+    }else{
+      this.items.splice(itemIndex, 1);
+    }
   }
 
   render() {
