@@ -75,11 +75,7 @@ describe('ShoppingListItem', function(){
 //ShoppingList tests
 
 let testSLI = new ShoppingListItem("apple", "red");
-// testSLI.check();
-// testSLI.render();
 let testSLI2 = new ShoppingListItem("orange", "orange");
-// testSLI2.uncheck();
-// testSLI2.render();
 let nonSLI = {name: "pear", description: "green"};
 
 describe('ShoppingList', function(){
